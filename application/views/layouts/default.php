@@ -490,7 +490,7 @@
 			<!-- Top Bar starts -->
 			<div class="top-bar">
 				<div class="page-title">
-					Dashboard
+					<?php echo $page_title; if(isset($page_sub_title) && strlen($page_sub_title) > 0): echo sprintf(' <small>%s</small>',$page_sub_title); endif; ?>
 				</div>
 				<ul class="stats hidden-xs">
 					<li>
@@ -514,7 +514,16 @@
 				</ul>
 			</div>
 			<!-- Top Bar ends -->		
-		<?php echo $template['body']; ?>
+			
+			<!-- Main Container starts -->
+			<div class="main-container-full">
+				<!-- Container fluid Starts -->
+				<div class="container-fluid">
+
+					<?php echo $template['body']; ?>
+					
+				</div>
+			</div>
 
 		<!-- Footer starts -->
 		<footer>

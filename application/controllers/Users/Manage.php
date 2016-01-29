@@ -14,134 +14,13 @@
 
 		public function dashboard()
 		{
-			// Get sorting/pagination params
-      $params = array(
-				'sort_table' => 'user',
-        'sort_column' => 'full_name',
-        'sort_order' => 'ASC',
-        'page' => 1
-      );
-      
-      $getParams = $this->input->get(null,true);
-      $params = $getParams ? array_merge($params,$getParams) : $params;
-
-      // Prepare data for template
-      $data = array(
-				'params' => $params
-      );
-
-			// ===== Column filters
-			$data['active_filters'] = array();
-			if (isset($params['status']))
-			{
-				$filter_parameters['filter']['user.status'] = array(
-						'keyword' => 'OR',
-						'arguments' => array(
-								array(
-										'operator' => '=',
-										'value' => $params['status'],
-								),
-						),
-				);
-				$data['active_filters']['status'] = array('label'=>'Status','value'=>ucfirst($params['status']));
-			}
-      
-			// Ensure filter only includes non-deleted administrator users
-      if (!isset($filter_parameters['filter']['user.status']))
-      {
-        $filter_parameters['filter']['user.status'] = array(
-            'keyword' => 'AND',
-            'arguments' => array(
-                array(
-                    'operator' => '!=',
-                    'value' => 'deleted',
-                ),
-            ),
-        );
-      }
-      $filter_parameters['filter']['user.type'] = array(
-          'keyword' => 'AND',
-          'arguments' => array(
-              array(
-                  'operator' => '=',
-                  'value' => 'administrator',
-              ),
-          ),
-      );
-			// ===== Column filters
-
-      $filter_parameters['paging'] = $this->filtering->prepare_paging_sorting($params);
-
-      $users = $this->filtering->do_filter_users($filter_parameters['filter'],$filter_parameters['paging']);
-      $data['users'] = array();
-			if(!is_null($users))
-			{
-				foreach($users['data'] as $user)
-				{
-					$data['users'][$user->id] = array(
-							//'publishers' => count($user->publishers()),
-							'properties' => !empty($user->user_properties) ? $user->user_properties : 0,
-							'handle' => $user->handle,
-							'email_address' => $user->email_address,
-							'first_name' => $user->first_name,
-							'last_name' => $user->last_name,
-							'status' => array(
-									'status' => $user->status,
-									'display' => $this->lang->line('user_status_' . $user->status),
-							),
-							'action' => ($user->status === 'suspended' ? 'enable' : 'suspend'),
-					);
-				}
-			}
-
-			// Create base url for pagination and filtering, load URL helper
-      $base_url = site_url('users/manage/dashboard');
-      $this->load->helper('url');
-
-      // ===== Pagination and Sorting Links
-      $pagination_params = array(
-        'url' => $base_url,
-        'params' => $getParams,
-        'filters' => $filter_parameters,
-        'rows' => isset($users['total']) ? $users['total']->rows : 0,
-        'sort_links' => array(
-          // table.column => [direction,class]
-          'user.full_name' => array('sort_order' => 'ASC', 'class' => null),
-          'tmp_property_user.user_properties' => array('sort_order' => 'DESC', 'class' => null),
-          'user.handle' => array('sort_order' => 'ASC', 'class' => null),
-          'user.email_address' => array('sort_order' => 'ASC', 'class' => null),
-          'user.status' => array('sort_order' => 'ASC', 'class' => null),
-        )
-      );
-      $paging_sorting_links = paging_sorting_links($pagination_params);
-      $data = array_merge($data,$paging_sorting_links);
-
-			// ===== End Pagination and Sorting Links
-
-			// ===== Filter Links
-      // If filters are active, create 'remove filter' links
-			if (!empty($data['active_filters']))
-			{
-				foreach ($data['active_filters'] AS $key => &$arr)
-				{
-					$arr['remove_filter'] = build_full_url($base_url,$getParams,$key);
-				}
-			}
-
-			// Ensure 'filter template' data is present for creating filter buttons in view
-			$data['filter_template'] = array('url'=>$base_url,'params'=>$getParams);
-      // ===== End Filter Links
+      $users = $this->user->filter_users();
 
 			$this->template
 							->set('active','users')
 							->set('page_title','System Settings:')
 							->set('page_sub_title','User Accounts')
-							->set_partial('header','layouts/global/html/header')
-							->set_partial('footer','layouts/global/html/footer')
-							->set_partial('layout_header','layouts/global/html/layout_header')
-							->set_partial('leftnav','layouts/nav/administration/system_settings/left')
-							->set_layout('2column_leftnav')
-							->build('content/users/manage/dashboard',$data);
+							->build('content/users/manage/dashboard',$users);
 		}
 		
 		// --------------------------------------------------------------------------
@@ -149,47 +28,6 @@
 		public function detail($user_id = null)
 		{
 			
-			$user = $this->user->do_fetch_user($user_id);
-			
-			$user_publishers = $user->publishers();
-			$user_properties = $user->properties();
-			$data['user'] = array(
-					'properties' => array(
-						'count' => count($user_properties),
-						'modified' => (count($user_properties) > 0) ? date('M j, Y h:i A',strtotime($user_properties[0]->created)) : 'Never',
-					),
-					'publishers' => array(
-						'count' => count($user_publishers),
-						'modified' => (count($user_publishers) > 0) ? date('M j, Y h:i A',strtotime($user_publishers[0]->created)) : 'Never',
-					),
-					'id' => $user->id,
-					'type' => array(
-							'type' => $user->type,
-							'display' => '<b>' . ucfirst($user->type) . '</b>'
-					),
-					'handle' => $user->handle,
-					'email_address' => $user->email_address,
-					'full_name' => $user->first_name . ' ' . $user->last_name,
-					'first_name' => $user->first_name,
-					'last_name' => $user->last_name,
-					'status' => array(
-							'status' => $user->status,
-							'display' => $this->lang->line('user_status_' . $user->status),
-					),
-					'created' => date('M j, Y h:i A',strtotime($user->created)),
-					'modified' => (!is_null($user->modified)) ? date('M j, Y h:i A',strtotime($user->modified)) : 'Never',
-			);
-			
-			$this->template
-							->set('active','users')
-							->set('page_title','User Settings:')
-							->set('page_sub_title',$user->first_name . '&nbsp;' . $user->last_name)
-							->set_partial('header','layouts/global/html/header')
-							->set_partial('footer','layouts/global/html/footer')
-							->set_partial('layout_header','layouts/global/html/layout_header',$data)
-							->set_partial('leftnav','layouts/nav/administration/system_settings/left',$data)
-							->set_layout('2column_leftnav')
-							->build('content/users/manage/detail');
 		}
 		
 		// --------------------------------------------------------------------------
@@ -279,7 +117,7 @@
 			);
 			
 			$this->template
-														->set('active','users')
+							->set('active','users')
 							->set('page_title','User Settings:')
 							->set('page_sub_title',$user->handle)
 							->build('content/users/manage/form',$data);

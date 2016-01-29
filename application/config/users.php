@@ -137,7 +137,7 @@ $config['confirm_reset_success_message'] = 'Password reset. Your new password ha
  * Prototype:
  * $config['login_success_url'] = 'application/url/path';
  */
-$config['login_success_url'] = 'reservations/manage/dashboard';
+$config['login_success_url'] = 'dashboard';
 $config['login_success_admin_url'] = 'dashboard';
 
 /**

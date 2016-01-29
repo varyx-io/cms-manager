@@ -1,64 +1,50 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>404 Page Not Found</title>
-<style type="text/css">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name="description" content="VARYX.io CMP System Exception" />
+		<meta name="author" content="VarYX.io" />
+		<link rel="shortcut icon" href="img/favicon.ico">
+		<title>404 Not Found</title>
+		
+		<!-- Bootstrap CSS -->
+		<link href="/ux/css/bootstrap.css" rel="stylesheet" media="screen">
 
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
+		<!-- Main CSS -->
+		<link href="/ux/css/main.css" rel="stylesheet" media="screen">
 
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
+		<!-- Font Awesome -->
+		<link href="/ux/fonts/font-awesome.min.css" rel="stylesheet">
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
+		<!-- Font Awesome -->
+		<link href="/ux/css/error.css" rel="stylesheet" media="screen">
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
+		<!-- HTML5 shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="/ux/js/html5shiv.js"></script>
+			<script src="/ux/js/respond.min.js"></script>
+		<![endif]-->
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
+	</head>  
 
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
-}
+	<body>
 
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
-</head>
-<body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
-	</div>
-</body>
+		<div id="page-wrapper">
+			<div class="error center-align-text">
+				<h1 class="error-heading">404<i>!</i></h1>
+				<h2 class="text-danger">Oops</h2>
+				<h3>Page not found!</h3>
+				<p>We're not sure if you messed up or we did, but if you landed here then somebody did...</p>
+				<a href="/" class="btn btn-success">Back to Home</a>
+			</div>       
+		</div>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="/ux/js/jquery.js"></script>
+
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="/ux/js/bootstrap.min.js"></script>
+		
+	</body>
 </html>

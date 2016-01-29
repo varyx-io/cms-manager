@@ -2,54 +2,98 @@
 
 	class User extends CI_Model {
 
+		public function __construct() {
+			parent::__construct();
+			
+			$this->config->load('users', TRUE);
+		}
 		/**
 		 * Types of model methods
 		 * 
-		 * filter, fetch, save, delete
+		 * filter, fetch, save, delete, do_
 		 */
 
+		public function filter_users()
+		{
+			$return = array(
+					'count' => 0,
+					'users' => array()
+			);
+
+
+			$query = $this->db
+							->select('`user`.`id` AS `user_id`')
+							->select('`user`.`type` AS `user_type`')
+							->select('`user`.`handle` AS `user_handle`')
+							->select('`user`.`email` AS `user_email`')
+							->select('`user`.`status` AS `user_status`')
+							->select('`user`.`created` AS `user_created`')
+							->select('`user`.`modified` AS `user_modified`')
+
+							->select('`user_avatar`.`file_name` AS `user_avatar_file_name`')
+
+							->join('`user_avatar`', '`user`.`id` = `user_avatar`.`user_id`', 'left')
+
+
+							->from('`user`')
+							->get();
+
+			$return['count'] = $query->num_rows();
+			if($return['count'] > 0)
+			{
+				foreach($query->result() as $row)
+				{
+					$user_avatar = new stdClass();
+					$user_avatar->file_name = $row->user_avatar_file_name;
+
+					$user = new stdClass();
+					$user->id = $row->user_id;
+					$user->type = $row->user_type;
+					$user->handle = $row->user_handle;
+					$user->email = $row->user_email;
+					$user->avatar = $user_avatar;
+					$user->status = $row->user_status;
+					$user->created = $row->user_created;
+					$user->modified = $row->user_modified;
+
+					array_push($return['users'],$user);
+				}
+			}
+
+			return $return;
+		}
+		
 		public function fetch_user($ident = null)
 		{
 			$return = null;
 			if(!is_null($ident))
 			{
+				$this->db
+								->select('`user`.`id` AS `user_id`')
+								->select('`user`.`type` AS `user_type`')
+								->select('`user`.`handle` AS `user_handle`')
+								->select('`user`.`email_address` AS `user_email_address`')
+								->select('`user`.`status` AS `user_status`')
+								->select('`user`.`created` AS `user_created`')
+								->select('`user`.`modified` AS `user_modified`')
+
+								->select('`user_avatar`.`file_name` AS `user_avatar_file_name`')
+
+								->join('`user_avatar`', '`user`.`id` = `user_avatar`.`user_id`', 'left')
+								->from('`user`');
 				if(is_numeric($ident))
 				{
-					$query = $this->db
-									->select('`user`.`id` AS `user_id`')
-									->select('`user`.`handle` AS `user_handle`')
-									->select('`user`.`email` AS `user_email`')
-									->select('`user`.`created` AS `user_created`')
-									->select('`user`.`modified` AS `user_modified`')
-
-									->select('`user_avatar`.`file_name` AS `user_avatar_file_name`')
-
-									->join('`user_avatar`', '`user`.`id` = `user_avatar`.`user_id`', 'left')
-
-									->where('`user`.`id`', $ident)
-
-									->from('`user`')
-									->get();
+					$this->db
+									->where('`user`.`id`', $ident);
+					
 				}
 				else
 				{
-					$query = $this->db
-									->select('`user`.`id` AS `user_id`')
-									->select('`user`.`handle` AS `user_handle`')
-									->select('`user`.`email` AS `user_email`')
-									->select('`user`.`created` AS `user_created`')
-									->select('`user`.`modified` AS `user_modified`')
-
-									->select('`user_avatar`.`file_name` AS `user_avatar_file_name`')
-
-									->join('`user_avatar`', '`user`.`id` = `user_avatar`.`user_id`', 'left')
-
-									->where('`user`.`handle`', $ident)
-
-									->from('`user`')
-									->get();
+					$this->db
+									->where('`user`.`handle`', $ident);
 				}
 
+				$query = $this->db->get();
 				if($query->num_rows() == 1)
 				{
 					$row = $query->row();
@@ -59,9 +103,11 @@
 
 					$user = new stdClass();
 					$user->id = $row->user_id;
+					$user->type = $row->user_type;
 					$user->handle = $row->user_handle;
-					$user->email = $row->user_email;
+					$user->email_address = $row->user_email_address;
 					$user->avatar = $user_avatar;
+					$user->status = $row->user_status;
 					$user->created = $row->user_created;
 					$user->modified = $row->user_modified;
 
@@ -74,7 +120,6 @@
 		public function fetch_user_passphrase($user_id = null)
 		{
 			$return = null;
-			
 			if(is_numeric($user_id))
 			{
 				$query = $this->db
@@ -84,6 +129,8 @@
 
 								->where('user_id', $user_id)
 
+								->order_by('`created`','DESC')
+								->limit(1)
 								->from('`user_passphrase`')
 								->get();
 				
@@ -104,8 +151,11 @@
 	
 		public function fetch_user_activation($user_id = null)
 		{
+			$return = null;
 			
+			return $return;
 		}
+		
 		public function fetch_user_reset($code = null)
 		{
 			$return = null;
@@ -187,69 +237,77 @@
 			return $return;
 		}
 		
-		/**
-		 * passphrase_check: copied from controllers/user/session.php
-		 * @param type $user_passphrase
-		 * @param type $user_handle
-		 * @return boolean
-		 */
-		public function passphrase_check($user_passphrase,$user_handle){
-			
+		public function do_login($user_handle = null)
+		{
 			$return = false;
-			$user = $this->user->fetch_user($user_handle);
-			
-		
-			if(!is_null($user))
+			if(!is_null($user_handle))
 			{
-				$user_passphrase = $this->user->fetch_user_passphrase($user->id);
-				$user_activation = $this->user->fetch_user_activation();
+				//	Does this user exist?
+				$user = $this->fetch_user($user_handle);
+				$this->do_set_session($user->id);
 				
-				if(!is_null($user_activation) && !is_null($user_passphrase))
+				if($this->session->has_userdata('redirect'))
 				{
-					//	Load configuration for user system
-					$this->config->load('user',true);
-					$this->load->helper('encrypt_helper');
-					
-					//	Is the password expired?
-					if((time() - (60*60*24*10000)) < strtotime($user_passphrase->created))
-					{
-						//	SALT unencrypted passphrase and prepare to compare it to what is in the record
-						$salt_length = $this->config->item('salt_length','user');
-						$salt_length = (intval($salt_length) > 16) ? 16 : intval($salt_length);
-						$salt = substr($passphrase->passphrase, 0, $salt_length);
-						$user_passphrase = encrypt_passphrase($user_passphrase, $salt);
-
-						if ($user_passphrase === $passphrase->passphrase)
-						{
-							$return = true;
-						}
-						else
-						{
-							$this->form_validation->set_message('_user_passphrase_check', 'Incorrect password.');
-						}
-					}
-					else
-					{
-						redirect('login/expired');
-					}
+					echo "has redirect";
+					$dest_url = $this->session->redirect;
 				}
 				else
 				{
-					if(count($user->activation()) > 0)
-					{
-						$this->form_validation->set_message('_user_passphrase_check', 'This user is not activated.  Please see your email for instructions on activating your login publisher.');
-					}
-					elseif(count($user->reset()) > 0)
-					{
-						$this->form_validation->set_message('_user_passphrase_check', 'A password reset is in effect.  Please see your email for instructions on resetting your password.');
+					$dest_url = $this->config->item('login_success_url','users');
+
+					if ($user->type == 'administrator'){
+						$dest_url = $this->config->item('login_success_admin_url','users');
 					}
 				}
-			}
-			else
-			{
-				$this->form_validation->set_message('_user_passphrase_check', 'User is not enabled for login.');
-			}
 
+				// redirect to login_success_url, either as a db field or a configured url
+				//$this->alert->set('success', 'You have been logged in.');
+				
+				redirect($dest_url);
+			}
+			return false;
+		}
+		
+		public function do_set_session($user_id = null)
+		{
+			$return = false;
+			if(is_numeric($user_id))
+			{
+				//	Get user
+				$user = $this->fetch_user($user_id);
+				
+				//	Check current user id and user data
+				if($user_id == $this->session->user_id || is_null($this->session->userdata('user_id')))
+				{
+					//	User-specific data we want to save into the session.
+					$user_data = array(
+							'handle' => $user->handle,
+							'email_address' => $user->email_address,
+							'avatar' => array(
+									'path' => 'path/to/images'
+							),
+							'created' => $user->created,
+							'modified' => $user->modified
+									
+					);
+
+					$session_userdata = array(
+							'user_id' => $user->id,
+							'user_data' => $user_data,
+					);
+
+					//	Store all that in a session
+					$this->session->set_userdata($session_userdata);
+				}
+				else
+				{
+					//	Force logout because user_id should match the session.  If it doesn't you are doing something naughty.
+					
+					$return = false;
+				}
+				
+
+			}
 			return $return;
 		}
 		

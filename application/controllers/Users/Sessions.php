@@ -40,11 +40,9 @@ class Sessions extends VARYX_Controller {
 			$user_reset = $this->user->fetch_user_reset($code);
 			if(!is_null($user_reset))
 			{
-				echo $user_reset->user_id;
 				$user = $this->user->fetch_user($user_reset->user_id);
 				if(!is_null($user))
 				{
-					echo $user->id;
 					$user_id = $user->id;
 					if($this->input->post('passphrase-save'))
 					{
@@ -129,6 +127,80 @@ class Sessions extends VARYX_Controller {
 			return $return;
 		}
 
+		/**
+		 * passphrase_check: copied from controllers/user/session.php
+		 * @param type $user_passphrase
+		 * @param type $user_handle
+		 * @return boolean
+		 */
+		public function _user_passphrase_check($form_user_passphrase,$form_user_handle){
+			
+			$return = false;
+			$user = $this->user->fetch_user($form_user_handle);
+			
+			if(!is_null($user))
+			{
+				$user_passphrase = $this->user->fetch_user_passphrase($user->id);
+				$user_activation = $this->user->fetch_user_activation();
+				$user_reset = $this->user->fetch_user_reset();
+				
+				if(is_null($user_activation) && is_null($user_reset))
+				{
+					if(!is_null($user_passphrase))
+					{
+						//	Load configuration for user system
+						$this->config->load('users',true);
+						$this->load->helper('encrypt_helper');
+
+						//	Is the password expired?
+						if((time() - (60*60*24*10000)) < strtotime($user_passphrase->created))
+						{
+							//	SALT unencrypted passphrase and prepare to compare it to what is in the record
+							$salt_length = $this->config->item('salt_length','users');
+							$salt_length = (intval($salt_length) > 16) ? 16 : intval($salt_length);
+							$salt = substr($user_passphrase->passphrase, 0, $salt_length);
+							$form_user_passphrase = encrypt_passphrase($form_user_passphrase, $salt);
+
+							if ($form_user_passphrase === $user_passphrase->passphrase)
+							{
+								$return = true;
+							}
+							else
+							{
+								$this->form_validation->set_message('_user_passphrase_check', 'Incorrect password.');
+							}
+						}
+						else
+						{
+							redirect('login/expired');
+						}
+					}
+					else
+					{
+						$this->form_validation->set_message('_user_passphrase_check', 'Password Null');
+					}
+						
+				}
+				else
+				{
+					if(!is_null($user_activation))
+					{
+						$this->form_validation->set_message('_user_passphrase_check', 'This user is not activated.  Please see your email for instructions on activating your login publisher.');
+					}
+					elseif(!is_null($user_reset))
+					{
+						$this->form_validation->set_message('_user_passphrase_check', 'A password reset is in effect.  Please see your email for instructions on resetting your password.');
+					}
+				}
+			}
+			else
+			{
+				$this->form_validation->set_message('_user_passphrase_check', 'User is not enabled for login.');
+			}
+
+			return $return;
+		}
+		
 		// --------------------------------------------------------------------------
 
 		public function _unique_user_handle_check($handle,$user_id = null)
