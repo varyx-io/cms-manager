@@ -63,4 +63,9 @@ $route['login/activate/(:any)'] = 'Users/Sessions/activate/$1';
 $route['login/activate'] = 'Users/Sessions/activate';
 $route['login/expired'] = 'Users/Sessions/expired';
 
+$route['users/([a-zA-Z]+)/edit/(\d+)'] = function ($product_type, $id)
+{
+        return 'catalog/product_edit/' . strtolower($product_type) . '/' . $id;
+};
+
 $route['files/(:any)'] = 'files/display/$1';
