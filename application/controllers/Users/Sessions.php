@@ -25,12 +25,16 @@ class Sessions extends VARYX_Controller {
 			$this->form_validation->set_rules('user[passphrase]', 'Password', 'required|callback__user_passphrase_check[' . $user_data['handle'] . ']');
 			if( $this->form_validation->run() === true && !is_numeric($user_data['handle']) ){
 				$this->user->do_login($user_data['handle']);
-				echo "honk";exit;
 			}
 		}
 		
 		$this->template
 							->build('content/users/sessions/login');
+	}
+	
+	public function logout()
+	{
+		$this->user->do_logout();
 	}
 	
 	public function reset($code = null)

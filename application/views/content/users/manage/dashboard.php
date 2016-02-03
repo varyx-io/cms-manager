@@ -19,9 +19,9 @@
 							<?php foreach($users as $user): ?>
 								<tr>
 										<td><?php echo $user->handle; ?></td>
-										<td><?php echo $user->email; ?></td>
+										<td><?php echo $user->email_address; ?></td>
 										<td><?php echo $user->created; ?></td>
-										<td><a href="<?php echo site_url('Users/Manage/record/' . $user->id); ?>"><i class="fa fa-pencil"></i> Edit</a> <a href="<?php echo site_url('Users/Manage/record/' . $user->id . '/delete'); ?>"><i class="fa fa-trash-o"></i> Delete</a></td>
+										<td><a href="<?php echo site_url('users/' . $user->id . '/record'); ?>"><i class="fa fa-pencil"></i> Edit</a> <a href="<?php echo site_url('users/' . $user->id . '/delete'); ?>"><i class="fa fa-trash-o"></i> Delete</a></td>
 								</tr>
 								<?php endforeach; ?>
 						</tbody>

@@ -1,7 +1,7 @@
 	<!-- Row starts -->
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-
+<?php echo validation_errors(); ?>
 		<?php echo form_open('', array('id' => 'edit-publisher')); ?>
 
 			<div class="blog">
@@ -13,10 +13,10 @@
 						<tbody>
 							<tr>
 								<th>
-									<label for="inputUserEmailAddress" class="<?php if(strlen(form_error('user[email]')) > 0):?> error<?php endif; ?>"><i class="required">*</i>Email:</label>
+									<label for="inputUserEmailAddress" class="<?php if(strlen(form_error('user[email_address]')) > 0):?> error<?php endif; ?>"><i class="required">*</i>Email Address:</label>
 								</th>
 								<td>
-									<input id="inputUserEmailAddress" type="text"  name="user[email_address]" value="<?php echo set_value('user[email]', $user['email']); ?>" class="input-xlarge<?php if(strlen(form_error('user[email]')) > 0):?> error popover-alert<?php endif; ?>"<?php if(strlen(form_error('user[email]')) > 0):?> data-content="<?php echo form_error('user[email]'); ?>" data-placement="right"<?php endif; ?> />
+									<input id="inputUserEmailAddress" type="text"  name="user[email_address]" value="<?php echo set_value('user[email_address]', $user['email_address']); ?>" class="input-xlarge<?php if(strlen(form_error('user[email]')) > 0):?> error popover-alert<?php endif; ?>"<?php if(strlen(form_error('user[email_address]')) > 0):?> data-content="<?php echo form_error('user[email_address]'); ?>" data-placement="right"<?php endif; ?> />
 								</td>
 							</tr>
 							<tr>

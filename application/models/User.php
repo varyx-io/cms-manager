@@ -25,7 +25,7 @@
 							->select('`user`.`id` AS `user_id`')
 							->select('`user`.`type` AS `user_type`')
 							->select('`user`.`handle` AS `user_handle`')
-							->select('`user`.`email` AS `user_email`')
+							->select('`user`.`email_address` AS `user_email_address`')
 							->select('`user`.`status` AS `user_status`')
 							->select('`user`.`created` AS `user_created`')
 							->select('`user`.`modified` AS `user_modified`')
@@ -50,7 +50,7 @@
 					$user->id = $row->user_id;
 					$user->type = $row->user_type;
 					$user->handle = $row->user_handle;
-					$user->email = $row->user_email;
+					$user->email_address = $row->user_email_address;
 					$user->avatar = $user_avatar;
 					$user->status = $row->user_status;
 					$user->created = $row->user_created;
@@ -90,7 +90,8 @@
 				else
 				{
 					$this->db
-									->where('`user`.`handle`', $ident);
+									->where('`user`.`handle`', $ident)
+									->or_where('`user`.`email_address`', $ident);
 				}
 
 				$query = $this->db->get();
@@ -186,6 +187,51 @@
 			return $return;
 		}
 		
+		public function save_user($user_data, $user_id = null)
+		{
+			$return = false;
+			
+			if(is_array($user_data))
+			{
+				if(is_numeric($user_id))
+				{
+					//	Is this a valid record?
+					$query = $this->db
+									->where('`id`', $user_id)
+									->get();
+
+					if($query->num_rows() == 1)
+					{
+						$update = $this->db
+										->where('`id`', $user_id)
+										->from('`user`')
+										->update();
+
+						if($update)
+						{
+							$return = $user_id;
+						}
+					}
+
+				}
+				elseif(empty($user_id))
+				{
+					$insert= $this->db
+									->set($user_data)
+									->set('`user`.`created`',date('Y-m-d H:i:s',time()))
+									->from('`user`')
+									->insert();
+
+					if($insert)
+					{
+						$return = $this->db->insert_id();
+					}
+				}
+			}
+
+			return $return;
+		}
+		
 		public function save_user_passphrase($user_id = null,$passphrase = null)
 		{
 			$return = false;
@@ -202,6 +248,24 @@
 				}
 			}
 
+			return $return;
+		}
+		
+		public function delete_user($user_id)
+		{
+			$return = null;
+			if(!is_null($user_id))
+			{
+				$user = $this->fetch_user($user_id);
+				if(!is_null($user))
+				{
+					$this->db
+									->where('id', $user->id)
+									->from('user')
+									->delete();
+					$return = true;
+				}
+			}
 			return $return;
 		}
 		
@@ -311,6 +375,11 @@
 			return $return;
 		}
 		
+		public function do_logout()
+		{
+			$this->session->sess_destroy();
+			redirect('login');
+		}
 		
 		
 	}

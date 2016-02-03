@@ -566,7 +566,7 @@
 	<script src="<?php echo base_url('ux/js/jvectormap/jquery-jvectormap-usa.js'); ?>"></script>
 
 	<!--	Tokenfield -->
-	<script src="{{ URL::asset('ux/js/tokenfield/bootstrap-tokenfield.js') }}"></script>
+	<script src="<?php echo base_url('ux/js/tokenfield/bootstrap-tokenfield.js'); ?>"></script>
 	
 	<!-- Summer Note JS -->
 	<script src="<?php echo base_url('ux/js/summernote/summernote.js'); ?>"></script>

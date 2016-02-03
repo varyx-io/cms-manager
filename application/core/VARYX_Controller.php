@@ -25,7 +25,7 @@
 			//	-- we want to know if we need to redirect to either a login page or an unauthorized page...
 			
 			//First, are we logged in?
-			$this->_logged_in = !is_null($this->session->has_userdata('user_id')) ? true : false;
+			$this->_logged_in = $this->session->has_userdata('user_id') ? true : false;
 			
 			if(!$this->_logged_in && !in_array($this->uri->uri_string(), $this->_unsecure))
 			{

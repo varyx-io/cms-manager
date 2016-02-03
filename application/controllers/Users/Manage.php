@@ -60,13 +60,16 @@
 
 			if($this->input->post('user-save'))
 			{
+				//	First let's validate the form
+				$this->load->library('form_validation');
+
 				$success = true;
 				
 				//	if this is a new user, we set notify to true, otherwise false (can be changed later)
 				$activate = (!is_null($user_id)) ? false : true;
 				
-				$this->form_validation->set_rules('user[first_name]', 'First Name', 'trim|required');
-				$this->form_validation->set_rules('user[last_name]', 'Last Name', 'trim|required');
+//				$this->form_validation->set_rules('user[first_name]', 'First Name', 'trim|required');
+//				$this->form_validation->set_rules('user[last_name]', 'Last Name', 'trim|required');
 				$this->form_validation->set_rules('user[email_address]', 'Email Address', 'trim|required|valid_email|callback__unique_user_email_address_check[' . $user_id . ']');
 				$this->form_validation->set_rules('user[handle]', 'User Handle', 'trim|required|callback__unique_user_handle_check[' . $user_id . ']');
 
@@ -74,23 +77,22 @@
 				{
 					$form_data = $this->input->post();
 					$user_data = array(
-						'first_name' => $form_data['user']['first_name'],
-						'last_name' => $form_data['user']['last_name'],
 						'email_address' => $form_data['user']['email_address'],
 						'handle' => $form_data['user']['handle'],
-						'type' => 'administrator'
+						//'type' => 'administrator'
 					);
-					$result = $this->user->do_save_user($user_id,$user_data);
+
+					$result = $this->user->save_user($user_data,$user_id);
 
 					if(is_numeric($result))
 					{
 						$user_id = $result;
 						
 						if(!$activate && $user_data['email_address'] !== $user->email_address){
-							$this->_reactivation_request_notification($user_id);
+							//$this->_reactivation_request_notification($user_id);
 						}
 						elseif($activate){
-							$this->_activation_request_notification($user_id);
+							//$this->_activation_request_notification($user_id);
 						}
 					} else{
 						$success = false;
@@ -101,8 +103,8 @@
 				
 				if($success)
 				{
-					$this->alert->set('success','User details were saved.');
-					redirect('users/manage/detail/' . $user_id);
+					//$this->alert->set('success','User details were saved.');
+					redirect('users/' . $user_id . '/record');
 				}
 			}
 
@@ -110,7 +112,7 @@
 
 			$data['user'] = array(
 				'id' => (!is_null($user)) ? $user->id : null,
-				'email' => (!is_null($user)) ? $user->email : null,
+				'email_address' => (!is_null($user)) ? $user->email_address : null,
 				'handle' => (!is_null($user)) ? $user->handle : null,
 				'created' => (!is_null($user)) ? date('m-d-Y',strtotime($user->created)) : null,
 				'modified' => (!is_null($user)) ? date('m-d-Y',strtotime($user->modified)) : null,
@@ -119,54 +121,39 @@
 			$this->template
 							->set('active','users')
 							->set('page_title','User Settings:')
-							->set('page_sub_title',$user->handle)
+							->set('page_sub_title', !is_null($data['user']['handle']) ? $data['user']['handle'] : 'New User')
 							->build('content/users/manage/form',$data);
 		}
 
 		// --------------------------------------------------------------------------
 		
-		public function delete($user_id = null,$undo = null)
+		public function delete($user_id = null)
 		{
 			if(is_numeric($user_id))
 			{
-				$user = $this->user->do_fetch_user($user_id);
+				$user = $this->user->fetch_user($user_id);
 				if(!is_null($user))
 				{
-					if($undo === 'undo')
+					$user_result = $this->user->delete_user($user_id);
+					if($user_result)
 					{
-						$user_result = $this->user->do_remove_user($user_id,true);
-						if($user_result)
-						{
-							$this->alert->set('info','The user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . ' was restored.');
-						}
-						else
-						{
-							$this->alert->set('error','There was an error restoring the user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . '.');
-						}
+						//$this->alert->set('info','The user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . ' was deleted. <a href="' . site_url('users/manage/delete/' . $user_id . '/undo') . '">Undo</a>');
 					}
 					else
 					{
-						$user_result = $this->user->do_remove_user($user_id);
-						if($user_result)
-						{
-							$this->alert->set('info','The user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . ' was deleted. <a href="' . site_url('users/manage/delete/' . $user_id . '/undo') . '">Undo</a>');
-						}
-						else
-						{
-							$this->alert->set('error','There was an error deleting the user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . '.');
-						}
+						//$this->alert->set('error','There was an error deleting the user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . '.');
 					}
 				}
 				else
 				{
-					$this->alert->set('error','The referenced user_id was not found in the system.');
+					//$this->alert->set('error','The referenced user_id was not found in the system.');
 				}
 			}
 			else
 			{
-				$this->alert->set('error','Illegal user ID.');
+				//$this->alert->set('error','Illegal user ID.');
 			}
-			redirect('users/manage/dashboard');
+			redirect('users/');
 		}
 		
 		public function activate($user_id = null)
@@ -458,6 +445,54 @@
 		// --------------------------------------------------------------------------
 		//	Utility Methods
 		// --------------------------------------------------------------------------
+		
+		public function _unique_user_handle_check($handle,$user_id = null)
+		{
+			$return = false;
+			$user = $this->user->fetch_user($handle);
+			if(!is_null($user))
+			{
+				if(is_numeric($user_id) && $user->id == $user_id) $return = true;
+				else $this->form_validation->set_message('_unique_user_handle_check', 'User Login ID must be unique.');
+			} else $return = true;
+			return $return;
+		}
+		
+		public function _unique_user_email_address_check($email_address,$user_id = null)
+		{
+			$return = false;
+			$user = $this->user->fetch_user($email_address);
+			if(!is_null($user))
+			{
+				if(is_numeric($user_id) && $user->id == $user_id) $return = true;
+				else $this->form_validation->set_message('_unique_user_email_address_check', 'This email address already exists.  User Email Address must be unique.');
+			} else $return = true;
+			return $return;
+		}
+
+
+		public function _check_passphrase_match()
+		{
+			$return = false;
+			$form_data = $this->input->post();
+			$user_passphrase = array_key_exists('user_passphrase',$form_data) ? $form_data['user_passphrase'] : null;
+			if(array_key_exists('passphrase',$user_passphrase) && array_key_exists('confirm',$user_passphrase))
+			{
+				if($user_passphrase['passphrase'] === $user_passphrase['confirm'])
+				{
+					$return = true;
+				}
+				else
+				{
+					$this->form_validation->set_message('_check_passphrase_match', 'Confirmation password does not match new password.');
+				}
+			}
+			else
+			{
+				$this->form_validation->set_message('_check_passphrase_match', 'Error occured while comparing passphrases.  Aborting.');
+			}
+			return $return;
+		}
 	}
 
 /* End of file manage.php */
