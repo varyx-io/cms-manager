@@ -198,11 +198,13 @@
 					//	Is this a valid record?
 					$query = $this->db
 									->where('`id`', $user_id)
+									->from('`user`')
 									->get();
 
 					if($query->num_rows() == 1)
 					{
 						$update = $this->db
+										->set($user_data)
 										->where('`id`', $user_id)
 										->from('`user`')
 										->update();

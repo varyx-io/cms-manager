@@ -1,44 +1,38 @@
+<div class="spacer">
 	<!-- Row starts -->
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-<?php echo validation_errors(); ?>
-		<?php echo form_open('', array('id' => 'edit-publisher')); ?>
+			<div class="panel no-margin">
+				<div class="panel-body">
+					<?php echo form_open('', array('id' => 'edit-user')); ?>
+						<fieldset>
+							<legend>User Account Information</legend>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label class="control-label">Handle</label>
+										<input type="text" name="user[handle]" value="<?php echo set_value('user[handle]', $user['handle']); ?>" class="form-control" />
+									</div>
+									<div class="col-md-6">
+										<label class="control-label">E-mail Address</label>
+										<input type="text" name="user[email_address]" value="<?php echo set_value('user[email_address]', $user['email_address']); ?>" class="form-control" />
+									</div>
+								</div>
+							</div>
+						</fieldset>
 
-			<div class="blog">
-				<div class="blog-header">
-					<h5 class="blog-title">User Account Information</h5>
-				</div>
-				<div class="blog-body table-responsive">
-					<table class="table table-bordered table-striped table-condensed">
-						<tbody>
-							<tr>
-								<th>
-									<label for="inputUserEmailAddress" class="<?php if(strlen(form_error('user[email_address]')) > 0):?> error<?php endif; ?>"><i class="required">*</i>Email Address:</label>
-								</th>
-								<td>
-									<input id="inputUserEmailAddress" type="text"  name="user[email_address]" value="<?php echo set_value('user[email_address]', $user['email_address']); ?>" class="input-xlarge<?php if(strlen(form_error('user[email]')) > 0):?> error popover-alert<?php endif; ?>"<?php if(strlen(form_error('user[email_address]')) > 0):?> data-content="<?php echo form_error('user[email_address]'); ?>" data-placement="right"<?php endif; ?> />
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label for="inputUserHandle" class="<?php if(strlen(form_error('user[handle]')) > 0):?> error<?php endif; ?>"><i class="required">*</i>Username:</label>
-								</th>
-								<td>
-									<input id="inputUserHandle" type="text" name="user[handle]"  value="<?php echo set_value('user[handle]', $user['handle']); ?>" class="input-xlarge<?php if(strlen(form_error('user[handle]')) > 0):?> error popover-alert<?php endif; ?>"<?php if(strlen(form_error('user[handle]')) > 0):?> data-content="<?php echo form_error('user[handle]'); ?>" data-placement="right"<?php endif; ?> />
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="blog-footer">
-					<div class="center-text button-row">
-						<a href="<?php echo site_url('users/manage/'.((!is_numeric($user['id'])) ? 'dashboard' : 'detail/'.$user['id'])); ?>" class="btn">Cancel Changes</a>
-						<input type="submit" name="user-save" value="Save and Close" class="btn btn-primary" />
-					</div>
+
+						<div class="form-group">
+							<div class="col-lg-6 col-lg-offset-6">
+								<button type="submit" class="btn btn-success">Save</button>
+							</div>
+						</div>
+					<?php echo form_close(); ?>
 				</div>
 			</div>
-	
-		<?php echo form_close(); ?>
-			
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+			<?php echo validation_errors(); ?>
 		</div>
 	</div>
+</div>	

@@ -69,9 +69,10 @@ $route['users/([\d]+/)?([a-zA-Z]+)'] = function ($user_id, $method)
         return 'Users/Manage/' . $method . '/' . $user_id;
 };
 
-$route['posts/([a-zA-Z]+)/edit/(\d+)'] = function ($product_type, $id)
+$route['posts(/)?'] = 'Posts/Manage/dashboard';
+$route['posts/([\d]+/)?([a-zA-Z]+)'] = function ($post_id, $method)
 {
-        return 'catalog/product_edit/' . strtolower($product_type) . '/' . $id;
+        return 'Posts/Manage/' . $method . '/' . $post_id;
 };
 
 $route['files/(:any)'] = 'files/display/$1';

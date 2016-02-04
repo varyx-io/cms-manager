@@ -103,7 +103,7 @@
 				
 				if($success)
 				{
-					//$this->alert->set('success','User details were saved.');
+					$this->alert->set('success','User details were saved.');
 					redirect('users/' . $user_id . '/record');
 				}
 			}
@@ -137,21 +137,21 @@
 					$user_result = $this->user->delete_user($user_id);
 					if($user_result)
 					{
-						//$this->alert->set('info','The user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . ' was deleted. <a href="' . site_url('users/manage/delete/' . $user_id . '/undo') . '">Undo</a>');
+						$this->alert->set('info','The user ' . $user->handle . ' was deleted.');
 					}
 					else
 					{
-						//$this->alert->set('error','There was an error deleting the user publisher belonging to ' . $user->first_name . ' ' . $user->last_name . '.');
+						$this->alert->set('error','There was an error deleting the user ' . $user->handle . '.');
 					}
 				}
 				else
 				{
-					//$this->alert->set('error','The referenced user_id was not found in the system.');
+					$this->alert->set('error','The referenced user_id was not found in the system.');
 				}
 			}
 			else
 			{
-				//$this->alert->set('error','Illegal user ID.');
+				$this->alert->set('error','Illegal user ID.');
 			}
 			redirect('users/');
 		}

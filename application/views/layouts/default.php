@@ -252,7 +252,7 @@
 				<div class="user-name">Welcome Mr. James</div>
 				<ul class="user-links">
 					<li>
-						<a href="{{ url('/profile') }}">
+						<a href="<?php echo site_url('profile'); ?>">
 							<i class="fa fa-user text-success"></i>
 						</a>
 					</li>
@@ -267,7 +267,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{ url('/logout') }}">
+						<a href="<?php echo site_url('logout'); ?>">
 							<i class="fa fa-sign-out text-danger"></i>
 						</a>
 					</li>
@@ -279,7 +279,7 @@
 			<div id='menu'>
 				<ul>
 					<li class="highlight">
-						<a href='index.html'>
+						<a href="<?php echo site_url('dashboard'); ?>">
 							<i class="fa fa-desktop"></i>
 							<span>Dashboard</span>
 							<span class="current-page"></span>
@@ -292,9 +292,15 @@
 						</a>
 					</li>
 					<li>
-						<a href='blog.html'>
+						<a href="<?php echo site_url('pages'); ?>">
+							<i class="fa fa-file-text"></i> 
+							<span>Pages</span>
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('posts'); ?>">
 							<i class="fa fa-pencil"></i> 
-							<span>Blog</span>
+							<span>Posts</span>
 						</a>
 					</li>
 					<li>
@@ -439,9 +445,9 @@
 						</ul>
 					</li>
 					<li>
-						<a href="<?php echo site_url('posts'); ?>">
-							<i class="fa fa-bars"></i> 
-							<span>Posts</span>
+						<a href="<?php echo site_url('users'); ?>">
+							<i class="fa fa-users"></i> 
+							<span>Users</span>
 						</a>
 					</li>
 				</ul>
@@ -519,7 +525,7 @@
 			<div class="main-container-full">
 				<!-- Container fluid Starts -->
 				<div class="container-fluid">
-
+					<?php	echo $this->alert->display(); ?>
 					<?php echo $template['body']; ?>
 					
 				</div>
