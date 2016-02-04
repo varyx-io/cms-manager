@@ -6,7 +6,7 @@ class Dashboard extends VARYX_Controller {
 	public function index()
 	{
 					$this->template
-							->set('active','users')
+							->set('active','dashboard')
 							->set('page_title','Dashboard')
 							->build('dashboard');
 	}

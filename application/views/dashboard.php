@@ -1,508 +1,219 @@
-
-
-					<!-- Current Stats Start -->
-					<div class="current-stats">
-						<div class="row">
-							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-								<div class="danger-bg center-align-text">
-									<div class="spacer-xs">
-										<i class="fa fa-github fa-2x"></i>
-										<small class="text-white">Github</small>
-										<h3 class="no-margin no-padding">9%</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-								<div class="success-bg center-align-text">
-									<div class="spacer-xs">
-										<i class="fa fa-foursquare fa-2x"></i>
-										<small class="text-white">Foursquare</small>
-										<h3 class="no-margin no-padding text-white">45%</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-								<div class="info-bg center-align-text">
-									<div class="spacer-xs">
-										<i class="fa fa-facebook fa-2x"></i>
-										<small class="text-white">Facebook</small>
-										<h3 class="no-margin no-padding">37%</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-								<div class="brown-bg center-align-text">
-									<div class="spacer-xs">
-										<i class="fa fa-google-plus fa-2x"></i>
-										<small class="text-white">Google Plus</small>
-										<h3 class="no-margin no-padding">25%</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-								<div class="linkedin-bg center-align-text">
-									<div class="spacer-xs">
-										<i class="fa fa-linkedin fa-2x"></i>
-										<small class="text-white">LinkedIn</small>
-										<h3 class="no-margin no-padding">19%</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-								<div class="twitter-bg center-align-text">
-									<div class="spacer-xs">
-										<i class="fa fa-twitter fa-2x"></i>
-										<small class="text-white">Twitter</small>
-										<h3 class="no-margin no-padding text-white">12%</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Current Stats End -->
-
-					<!-- Spacer starts -->
-					<div class="spacer">
-						<!-- Row Start -->
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<!-- Widget starts -->
-								<div class="blog">
-									<div class="blog-header">
-										<h5 class="blog-title">Social Network Analysis</h5>
-									</div>
-									<div class="blog-body">
-										<div class="row">
-											<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-												<div id="us-map" class="chart-height-lg"></div>
-											</div>
-											<div class="visitors-total">
-												<h3>88,305</h3>
-												<p>Last week total visits</p>
-											</div>
-											<div class="visit-stats">
-												<ul class="clearfix">
-													<li>
-														<div class="donut animated rubberBand">
-															<div id="donut-chart-1" style="width:48px; height: 48px;"></div>
-															<span>65%</span>
-														</div>
-														<h2 class="text-danger">7235</h2>
-														<p>Visits</p>
-													</li>
-													<li>
-														<div class="donut animated rubberBand">
-															<div id="donut-chart-2" style="width:48px; height: 48px;"></div>
-															<span>17%</span>
-														</div>
-														<h2 class="text-info">3269</h2>
-														<p>Male</p>														
-													</li>
-													<li>
-														<div class="donut animated rubberBand">
-															<div id="donut-chart-3" style="width:48px; height: 48px;"></div>
-															<span>32%</span>
-														</div>
-														<h2 class="text-success">5972</h2>
-														<p>Female</p>														
-													</li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Widget ends -->
-							</div>
-						</div>
-						<!-- Row End -->
-
-						<!-- Row Start -->
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<!-- Widget starts -->
-								<div class="blog">
-									<div class="blog-header">
-										<h5 class="blog-title">Appointments</h5>
-									</div>
-									<div class="blog-body">
-										<!-- Row starts -->
-										<div class="row">
-											<div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-												<div class="bg-primary-light">
-													<h3 class="text-danger  no-margin">Today</h3>
-													<ul class="appointments">
-														<li><i class="fa fa-circle text-danger"></i>Meet Mr. Peter @ 10:30 AM</li>
-														<li><i class="fa fa-circle text-warning"></i>Skype call @ 12:00 PM</li>
-														<li><i class="fa fa-circle text-success"></i>Send greetings to Sandy</li>
-														<li><i class="fa fa-circle text-info"></i>Pickup kids @ 4:00 PM</li>
-														<li><i class="fa fa-circle text-fb"></i>Dinner with Maria @ 8:00 PM</li>
-													</ul>
-												</div>
-											</div>
-											<div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
-												<div id="datepicker"></div>
-											</div>
-										</div>
-										<!-- Row ends -->
-									</div>
-								</div>
-								<!-- Widget ends -->
-							</div>
-						</div>
-						<!-- Row End -->
-
-						<!-- Row Start -->
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-								<!-- Widget starts -->
-								<div class="blog blog-info">
-									<div class="blog-header">
-										<h5 class="blog-title">Chats</h5>
-									</div>
-									<div class="blog-body">
-										<ul class="chats">
-											<li class="in">
-												<img class="avatar" alt="" src="img/user2.jpg">
-												<div class="message">
-													<span class="arrow"></span>
-													<a href="#" class="name" data-original-title="" title="">Sandy</a>
-													<span class="date-time">
-														at May 21st, 2014 12:0<i class="fa fa-clock-o"></i>
-													</span>
-													<div class="progress-stats clearfix">
-														<i class="fa fa-camera-retro pull-left fa-lg text-info"></i>
-														<div class="progress">
-															<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-															</div>
-														</div>
-													</div>
-													<span class="body body-grey">
-														Raw denim heard of them master cleanse.
-													</span>
-												</div>
-											</li>
-											<li class="out">
-												<img class="avatar" alt="" src="img/user3.jpg">
-												<div class="message">
-													<span class="arrow"></span>
-													<a href="#" class="name" data-original-title="" title="">Peter</a>
-													<span class="date-time">
-														at May 14th, 2014 09:32<i class="fa fa-clock-o"></i>
-													</span>
-													<span class="body body-blue">
-														Next level veard stumptown, thundercats <i class="fa fa-smile-o fa-lg text-primary"></i>
-													</span>
-												</div>
-											</li>
-											<li class="in">
-												<img class="avatar" alt="" src="img/user4.jpg">
-												<div class="message">
-													<span class="arrow"></span>
-													<a href="#" class="name" data-original-title="" title="">Johnson</a>
-													<span class="date-time">
-														at Apr 28th, 2014 09:47<i class="fa fa-clock-o"></i>
-													</span>
-													<span class="body body-grey">
-														Beard stumptown scenester farm-to-table.
-													</span>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<!-- Widget ends -->
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-								<!-- Widget starts -->
-								<div class="blog blog-danger">
-									<div class="blog-header">
-										<h5 class="blog-title">Clients List</h5>
-									</div>
-									<div class="blog-body">
-										<ul class="clients-list">
-											<li class="client clearfix">
-												<img src="img/user4.jpg" class="avatar" alt="Client">
-												<div class="client-details">
-													<p>
-														<span class="name">Peter</span>
-														<span class="email">mail.smith@mail.ro</span>
-													</p>
-													<ul class="icons-nav">
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Delete">
-																<i class="fa fa-trash-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Email">
-																<i class="fa fa-envelope-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Contact">
-																<i class="fa fa-phone"></i>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-											<li class="client clearfix">
-												<img src="img/user1.jpg" class="avatar" alt="Client">
-												<div class="client-details">
-													<p>
-														<span class="name">Willims</span>
-														<span class="email">id.will@mail.io</span>
-													</p>
-													<ul class="icons-nav">
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Delete">
-																<i class="fa fa-trash-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Email">
-																<i class="fa fa-envelope-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Contact">
-																<i class="fa fa-phone"></i>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-											<li class="client clearfix">
-												<img src="img/user2.jpg" class="avatar" alt="Client">
-												<div class="client-details">
-													<p>
-														<span class="name">Henreque</span>
-														<span class="email">henrq@mail.ro</span>
-													</p>
-													<ul class="icons-nav">
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Delete">
-																<i class="fa fa-trash-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Email">
-																<i class="fa fa-envelope-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Contact">
-																<i class="fa fa-phone"></i>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-											<li class="client clearfix">
-												<img src="img/user3.jpg" class="avatar" alt="Client">
-												<div class="client-details">
-													<p>
-														<span class="name">Samson</span>
-														<span class="email">sams@mail.com</span>
-													</p>
-													<ul class="icons-nav">
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Delete">
-																<i class="fa fa-trash-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Email">
-																<i class="fa fa-envelope-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Contact">
-																<i class="fa fa-phone"></i>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-											<li class="client clearfix">
-												<img src="img/user4.jpg" class="avatar" alt="Client">
-												<div class="client-details">
-													<p>
-														<span class="name">Valli</span>
-														<span class="email">mail.val@mail.us</span>
-													</p>
-													<ul class="icons-nav">
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Delete">
-																<i class="fa fa-trash-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Email">
-																<i class="fa fa-envelope-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Contact">
-																<i class="fa fa-phone"></i>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-											<li class="client clearfix">
-												<img src="img/user5.jpg" class="avatar" alt="Client">
-												<div class="client-details">
-													<p>
-														<span class="name">Jene</span>
-														<span class="email">jason@mail.com</span>
-													</p>
-													<ul class="icons-nav">
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Delete">
-																<i class="fa fa-trash-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Email">
-																<i class="fa fa-envelope-o"></i>
-															</a>
-														</li>
-														<li>
-															<a href="#" data-toggle="tooltip" data-placement="left" title="Contact">
-																<i class="fa fa-phone"></i>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<!-- Widget ends -->
-							</div>
-						</div>
-						<!-- Row End -->
-
-						<!-- Row Starts -->
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div class="blog blog-success no-margin">
-									<div class="blog-header">
-										<h5 class="blog-title">Sales Stats</h5>
-									</div>
-									<div class="blog-body">
-										<div class="table-responsive">
-											<table class="table table-condensed table-bordered no-margin">
-												<tbody>
-													<tr>
-														<td>
-															<span class="chart" id="spark_1"></span>
-														</td>
-														<td>
-															Wilson
-														</td>
-														<td>
-															19275, Walnut Creek, CA
-														</td>
-														<td>
-															4531
-														</td>
-														<td>
-															<span class="badge badge-info">
-																Processing
-															</span>
-														</td>
-														<td rowspan="5" class="center-align-text">
-															<div class="chart" id="spark_6"></div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<span class="chart" id="spark_2"></span>
-														</td>
-														<td>
-															Jason
-														</td>
-														<td>
-															18932, Wilsan Gardan Broadway, SU
-														</td>
-														<td>
-															9852
-														</td>
-														<td>
-															<span class="badge badge-success">
-																Sent
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<span class="chart" id="spark_3"></span>
-														</td>
-														<td>
-															Robson
-														</td>
-														<td>
-															11217, Church Street, SN
-														</td>
-														<td>
-															1744
-														</td>
-														<td>
-															<span class="badge badge-danger">
-																Cancelled
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<span class="chart" id="spark_4"></span>
-														</td>
-														<td>
-															Karan
-														</td>
-														<td>
-															3229, North Broadway, GN
-														</td>
-														<td>
-															4321
-														</td>
-														<td>
-															<span class="badge badge-info">
-																Processing
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<span class="chart" id="spark_5"></span>
-														</td>
-														<td>
-															Lasan
-														</td>
-														<td>
-															2318, New Lason Road, BS
-														</td>
-														<td>
-															245
-														</td>
-														<td>
-															<span class="badge badge-success">
-																Sent
-															</span>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>  
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Row Ends -->
-
-					</div>
-					<!-- Spacer ends -->
-
-				
+<div class="pages pages_dashboard">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="panel panel-danger">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Users statistic</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="ld-widget">
+                            <div class="ld-widget__cont">
+                              <div class="ld-widget-main">
+                                <div class="ld-widget-main__title">Levels</div>
+                                <div class="ld-widget-main__chart"></div>
+                              </div>
+                              <div class="ld-widget-side">
+                                <div class="ld-widget-side__title">Ratio</div>
+                                <div class="ld-widget-side__chart"></div>
+                                <div class="ld-widget-side__footer">
+                                  <div class="ld-widget-side__item">
+                                    <div class="ld-widget-side__label">Free</div>
+                                    <div class="ld-widget-side__value">45</div>
+                                  </div>
+                                  <div class="ld-widget-side__item">
+                                    <div class="ld-widget-side__label">Light</div>
+                                    <div class="ld-widget-side__value">30</div>
+                                  </div>
+                                  <div class="ld-widget-side__item">
+                                    <div class="ld-widget-side__label">Pro</div>
+                                    <div class="ld-widget-side__value">20</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="panel panel-success">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Overview</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="ov-widget">
+                            <div class="ov-widget__list">
+                              <div class="ov-widget__item ov-widget__item_inc">
+                                <div class="ov-widget__value">1,950</div>
+                                <div class="ov-widget__info">
+                                  <div class="ov-widget__title">Total users</div>
+                                  <div class="ov-widget__change"><span>15</span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                </div>
+                              </div>
+                              <div class="ov-widget__item ov-widget__item_dec">
+                                <div class="ov-widget__value">$3,230</div>
+                                <div class="ov-widget__info">
+                                  <div class="ov-widget__title">Earnings</div>
+                                  <div class="ov-widget__change"><span>$140</span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                </div>
+                              </div>
+                              <div class="ov-widget__item ov-widget__item_warn">
+                                <div class="ov-widget__value">12,450</div>
+                                <div class="ov-widget__info">
+                                  <div class="ov-widget__title">Visits</div>
+                                  <div class="ov-widget__change"><span>921</span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                </div>
+                              </div>
+                              <div class="ov-widget__item ov-widget__item_tack">
+                                <div class="ov-widget__value">1,087</div>
+                                <div class="ov-widget__info">
+                                  <div class="ov-widget__title">Orders</div>
+                                  <div class="ov-widget__change"><span></span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                </div>
+                              </div>
+                              <div class="ov-widget__bar"><span>Conquer the world</span>
+                                <div class="progress">
+                                  <div role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%" class="progress-bar progress-bar-info"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="panel panel-info">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Activity feed</h3>
+                        </div>
+                        <div class="feed-widget">
+                          <div class="feed-widget__wrap scrollable scrollbar-macosx">
+                            <div class="feed-widget__cont">
+                              <div class="feed-widget__list">
+                                <div class="feed-widget__item feed-widget__item_user">
+                                  <div class="feed-widget__ico"><i class="fa fa-fw"></i></div>
+                                  <div class="feed-widget__info">
+                                    <div class="feed-widget__text"><b><a href='./'>Gary Long</a></b> has registered.</div>
+                                    <div class="feed-widget__date">14:20 pm - 01.11.2016</div>
+                                  </div>
+                                </div>
+                                <div class="feed-widget__item feed-widget__item_product">
+                                  <div class="feed-widget__ico"><i class="fa fa-fw"></i></div>
+                                  <div class="feed-widget__info">
+                                    <div class="feed-widget__text">New product <b><a href='./'>Sony PlayStation 4</a></b>.</div>
+                                    <div class="feed-widget__date">10:08 pm - 01.11.2016</div>
+                                  </div>
+                                </div>
+                                <div class="feed-widget__item feed-widget__item_order">
+                                  <div class="feed-widget__ico"><i class="fa fa-fw"></i></div>
+                                  <div class="feed-widget__info">
+                                    <div class="feed-widget__text">New order <b><a href='./'>#35108243</a></b>.</div>
+                                    <div class="feed-widget__date">09:42 pm - 01.11.2016</div>
+                                  </div>
+                                </div>
+                                <div class="feed-widget__item feed-widget__item_subscriber">
+                                  <div class="feed-widget__ico"><i class="fa fa-fw"></i></div>
+                                  <div class="feed-widget__info">
+                                    <div class="feed-widget__text"><b><a href='./'>Julie Payne</a></b> subscribed to a news feed.</div>
+                                    <div class="feed-widget__date">18:06 pm - 01.10.2016</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="panel panel-danger">
+                        <div class="panel-heading panel-heading_label">
+                          <h3 class="panel-title">Support Messages</h3>
+                          <div class="label label-danger">2</div>
+                        </div>
+                        <div class="sp-widget">
+                          <div class="sp-widget__wrap scrollable scrollbar-macosx">
+                            <div class="sp-widget__cont">
+                              <div class="sp-widget__top">
+                                <div class="sp-widget__info">
+                                  <div class="sp-widget__title"><i class="fa fa-envelope-o"></i><span>2 New Messages</span></div>
+                                </div>
+                                <div class="sp-widget__all"><a href="inbox.html" class="btn btn-default btn-block">Show All</a></div>
+                              </div>
+                              <div class="sp-widget__list">
+                                <div class="sp-widget__item">
+                                  <div class="sp-widget__user"><a href="./">Carol Burton</a><span class="sp-widget__date">, 18:06 pm</span></div>
+                                  <div class="sp-widget__text">Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.</div>
+                                </div>
+                                <div class="sp-widget__item">
+                                  <div class="sp-widget__user"><a href="./">Judy Shaw</a><span class="sp-widget__date">, 11:38 pm</span></div>
+                                  <div class="sp-widget__text">Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.</div>
+                                </div>
+                                <div class="sp-widget__item">
+                                  <div class="sp-widget__user"><a href="./">Angela Kennedy</a><span class="sp-widget__date">, 13:03 pm - 01.09.2016</span></div>
+                                  <div class="sp-widget__text">Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat.</div>
+                                </div>
+                                <div class="sp-widget__item">
+                                  <div class="sp-widget__user"><a href="./">Larry Cole</a><span class="sp-widget__date">, 15:10 pm - 01.08.2016</span></div>
+                                  <div class="sp-widget__text">Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.</div>
+                                </div>
+                                <div class="sp-widget__item">
+                                  <div class="sp-widget__user"><a href="./">Wanda Watson</a><span class="sp-widget__date">, 09:18 pm - 01.08.2016</span></div>
+                                  <div class="sp-widget__text">Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="panel panel-warning">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Settings</h3>
+                        </div>
+                        <div class="st-widget">
+                          <div class="st-widget__wrap">
+                            <div class="st-widget__cont">
+                              <div class="st-widget__item st-widget__item_switch">
+                                <div class="st-widget__label">Site accessibility</div>
+                                <div class="st-widget__switch">
+                                  <input type="checkbox" checked="checked" data-size="mini" data-on-color="success" data-off-color="danger" class="bs-switch">
+                                </div>
+                              </div>
+                              <div class="st-widget__item st-widget__item_switch">
+                                <div class="st-widget__label">Invite mailing</div>
+                                <div class="st-widget__switch">
+                                  <input type="checkbox" data-size="mini" data-on-color="success" data-off-color="danger" class="bs-switch">
+                                </div>
+                              </div>
+                              <div class="st-widget__item st-widget__item_slider">
+                                <div class="st-widget__label">Delivery limit</div>
+                                <div class="st-widget__slider">
+                                  <input type="text" name="" value="" data-grid="true" data-min="0" data-max="2000" data-from="600" data-step="200" class="settings-slider">
+                                </div>
+                              </div>
+                              <div class="st-widget__item st-widget__item_number">
+                                <div class="st-widget__label">Timeout value</div>
+                                <div class="st-widget__number">
+                                  <input type="number" min="5" max="50" step="5" value="15" class="form-control">
+                                </div>
+                              </div>
+                              <div class="st-widget__item st-widget__item_select">
+                                <div class="st-widget__label">Something variant</div>
+                                <div class="st-widget__select">
+                                  <select placeholder="Variable" class="selectpicker form-control">
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>

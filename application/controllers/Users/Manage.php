@@ -5,7 +5,30 @@
 		public function __construct()
 		{
 			parent::__construct();
+			$stylesheet_file_paths = array(
+					'ux/libs/datatables/media/css/dataTables.bootstrap.min.css',
+					'ux/libs/selectize/dist/css/selectize.default.css',
+					'ux/libs/selectize/dist/css/selectize.bootstrap3.css',
+					'ux/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+					'ux/libs/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
+					'ux/libs/bootstrap-select/dist/css/bootstrap-select.min.css',
+			);
 
+			
+			
+			$javascript_file_paths = array(
+					'ux/libs/datatables/media/js/jquery.dataTables.min.js',
+					'ux/libs/datatables/media/js/dataTables.select.js',
+					'ux/libs/datatables/media/js/dataTables.bootstrap.js',
+					'ux/libs/selectize/dist/js/standalone/selectize.min.js',
+					'ux/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+					'ux/libs/bootstrap-select/dist/js/bootstrap-select.min.js',
+					'ux/js/template/users.js',
+			);
+			
+			$this->template
+							->set('controller_javascript_files',$javascript_file_paths)
+							->set('controller_stylesheet_files',$stylesheet_file_paths);
 		}
 
 		// --------------------------------------------------------------------------
@@ -104,7 +127,7 @@
 				if($success)
 				{
 					$this->alert->set('success','User details were saved.');
-					redirect('users/' . $user_id . '/record');
+					redirect('users/');
 				}
 			}
 
@@ -153,7 +176,7 @@
 			{
 				$this->alert->set('error','Illegal user ID.');
 			}
-			redirect('users/');
+			redirect('users');
 		}
 		
 		public function activate($user_id = null)
