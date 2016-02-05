@@ -1133,6 +1133,7 @@
 									<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-danger dropdown-toggle"><span class="caret"></span></button>
 									<ul class="dropdown-menu">
 										<li><a class="users-preview__detail" href="#">Details</a></li>
+										<li><a class="users-preview__reset" href="#">Reset</a></li>
 										<li><a class="users-preview__disable" href="#">Disable</a></li>
 										<li><a class="users-preview__delete" href="#">Delete</a></li>
 									</ul>

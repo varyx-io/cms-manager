@@ -23,7 +23,7 @@
 					'ux/libs/selectize/dist/js/standalone/selectize.min.js',
 					'ux/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
 					'ux/libs/bootstrap-select/dist/js/bootstrap-select.min.js',
-					'ux/js/template/users.js',
+					'ux/js/modules/users.min.js',
 			);
 			
 			$this->template

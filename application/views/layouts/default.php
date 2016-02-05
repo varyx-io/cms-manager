@@ -21,7 +21,8 @@
 		
 		<?php endforeach; endif; ?>
 		
-    <link href="<?php echo base_url('ux/css/right.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('ux/css/app.min.css'); ?>" rel="stylesheet">
+		
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
@@ -72,9 +73,11 @@
           </ul>
         </div>
       </nav>
-      <div class="dashboard">
+      
+			<div class="dashboard">
         <div class="sidebar">
-          <div class="quickmenu">
+          
+					<div class="quickmenu">
             <div class="quickmenu__cont">
               <div class="quickmenu__list">
                 <div class="quickmenu__item active">
@@ -95,46 +98,34 @@
               </div>
             </div>
           </div>
-          <div class="scrollable scrollbar-macosx">
+          
+					<div class="scrollable scrollbar-macosx">
             <div class="sidebar__cont">
-              <div class="sidebar__menu">
+              
+							<div class="sidebar__menu">
                 <div class="sidebar__title">Pages</div>
                 <ul class="nav nav-menu">
-                  <li <?php if($active == 'dashboard'):?>class="active"<?php endif; ?>><a href="<?php echo site_url('dashboard'); ?>">
-                      <div class="nav-menu__ico"><i class="fa fa-fw fa-star"></i></div>
-                      <div class="nav-menu__text"><span>Dashboard</span></div></a></li>
-                  <li><a href="products.html">
+                  <li <?php if($active == 'dashboard'):?>class="active"<?php endif; ?>>
+										<a href="<?php echo site_url('dashboard'); ?>"><i class="fa fa-fw fa-star"></i> <span>Dashboard</span></a>
+									</li>
+                  <li><a href="<?php echo site_url('pages'); ?>">
                       <div class="nav-menu__ico"><i class="fa fa-fw fa-cube"></i></div>
-                      <div class="nav-menu__text"><span>Products</span></div></a></li>
-                  <li><a href="#">
-                      <div class="nav-menu__ico"><i class="fa fa-fw fa-envelope"></i></div>
-                      <div class="nav-menu__text"><span>Mailbox</span></div>
-                      <div class="nav-menu__right"><i class="fa fa-fw fa-angle-right arrow"></i></div></a>
-                    <ul class="nav nav-menu__second collapse">
-                      <li><a href="inbox.html">Inbox</a></li>
-                      <li><a href="sent.html">Sent</a></li>
-                      <li><a href="compose.html">Compose</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="orders.html">
-                      <div class="nav-menu__ico"><i class="fa fa-fw fa-truck"></i></div>
-                      <div class="nav-menu__text"><span>Orders</span></div>
-                      <div class="nav-menu__right"><i class="badge">2</i></div></a></li>
-                  <li <?php if($active == 'users'):?>class="active"<?php endif; ?>><a href="<?php echo site_url('users'); ?>">
-                      <div class="nav-menu__ico"><i class="fa fa-fw fa-user"></i></div>
-                      <div class="nav-menu__text"><span>Users</span></div></a></li>
-                  <li><a href="#">
-                      <div class="nav-menu__ico"><i class="fa fa-fw fa-folder-o"></i></div>
-                      <div class="nav-menu__text"><span>Other</span></div>
-                      <div class="nav-menu__right"><i class="fa fa-fw fa-angle-right arrow"></i></div></a>
-                    <ul class="nav nav-menu__second collapse in">
-                      <li><a href="blank.html">Blank</a></li>
-                      <li><a href="login.html">Login</a></li>
-                    </ul>
-                  </li>
+                      <div class="nav-menu__text"><span>Pages</span></div></a>
+									</li>
+                  <li>
+										<a href="<?php echo site_url('posts'); ?>">
+                      <div class="nav-menu__ico"><i class="fa fa-fw fa-cube"></i></div>
+                      <div class="nav-menu__text"><span>Posts</span></div></a>
+									</li>
                 </ul>
-                <div class="sidebar__title">Administration</div>
+                
+								<div class="sidebar__title">Administration</div>
                 <ul class="nav nav-menu">
+									<li <?php if($active == 'users'):?>class="active"<?php endif; ?>><a href="<?php echo site_url('users'); ?>">
+                      <div class="nav-menu__ico"><i class="fa fa-fw fa-users"></i></div>
+                      <div class="nav-menu__text"><span>Users</span></div>
+										</a>
+									</li>
                   <li>
 										<a href="#">
                       <div class="nav-menu__ico"><i class="fa fa-fw fa-th-large"></i></div>
@@ -176,6 +167,7 @@
 									</li>
                 </ul>
               </div>
+
               <div class="sidebar__menu">
                 <div class="sidebar__btn"><a href="compose.html" class="btn btn-block btn-default">Compose Mail</a></div>
                 <div class="sidebar__title">Mail</div>
@@ -202,6 +194,7 @@
                       <div class="nav-menu__text"><span>Support</span></div></a></li>
                 </div>
               </div>
+
               <div class="sidebar__menu">
                 <div class="sidebar__title">New Messages</div>
                 <div class="lm-widget">
@@ -262,6 +255,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="sidebar__menu">
                 <div class="sidebar__title">Recent activity</div>
                 <div class="ra-widget">
@@ -343,6 +337,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="sidebar__menu">
                 <div class="sidebar__title">Settings</div>
                 <div class="ss-widget">
@@ -400,6 +395,7 @@
               </div>
             </div>
           </div>
+					
         </div>
         <div class="main">
           <div class="scrollable scrollbar-macosx">
