@@ -37,6 +37,50 @@ class Sessions extends VARYX_Controller {
 		$this->user->do_logout();
 	}
 	
+	public function activate($code)
+	{
+		if(!is_null($code))
+		{
+			$user = $this->user->fetch_user_activation($code);
+			if(!is_null($user))
+			{
+			  $user_id = $user->id;
+			  if($this->input->post('passphrase-save'))
+				{
+					$this->load->library('form_validation');
+					$this->form_validation->set_rules('user_passphrase[passphrase]', 'New Password', 'trim|required');
+					$this->form_validation->set_rules('user_passphrase[confirm]', 'Confirm New Password', 'trim|required|callback__check_passphrase_match');
+					if($this->form_validation->run() == true)
+					{
+						$form_data = $this->input->post();
+						$user_passphrase = $form_data['user_passphrase'];
+						$user_passphrase_result = $this->user->save_user_passphrase($user_id,$user_passphrase['passphrase']);
+						if(is_numeric($user_passphrase_result))
+						{
+							$this->user->save_user(array('status' => 'active'),$user_id);
+							$this->user->delete_user_activation($user_id);
+
+							$this->alert->set('success','Your account was successfully activated!');
+							redirect('login');
+						}
+					}
+			  }
+			  else
+			  {
+					$this->template->set('confmsg',false);
+					$this->template->set('showform',true);
+			  }
+			  $this->template
+					  ->build('content/users/sessions/activate');
+			}
+		}
+		else
+		{
+			$this->alert->set('error','Invalid reset code.');
+			redirect('login');
+		}
+	}
+	
 	public function reset($code = null)
 	{
 		if(!is_null($code))

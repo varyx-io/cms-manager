@@ -70,7 +70,6 @@
 		public function record($user_id = null)
 		{
 			//	Fetch requested Data
-			$user = null;
 			if(is_numeric($user_id))
 			{
 				$user = $this->user->fetch_user($user_id);
@@ -79,6 +78,10 @@
 					$this->alert->set('error','Invalid user selected');
 					redirect('users/manage/dashboard');
 				}
+			}
+			else
+			{
+				$user_id = null;
 			}
 
 			if($this->input->post('user-save'))
@@ -89,8 +92,7 @@
 				$success = true;
 				
 				//	if this is a new user, we set notify to true, otherwise false (can be changed later)
-				$activate = (!is_null($user_id)) ? false : true;
-				
+				$new_user = (is_null($user_id)) ? true : false;
 //				$this->form_validation->set_rules('user[first_name]', 'First Name', 'trim|required');
 //				$this->form_validation->set_rules('user[last_name]', 'Last Name', 'trim|required');
 				$this->form_validation->set_rules('user[email_address]', 'Email Address', 'trim|required|valid_email|callback__unique_user_email_address_check[' . $user_id . ']');
@@ -110,12 +112,21 @@
 					if(is_numeric($result))
 					{
 						$user_id = $result;
+						$user = $this->user->fetch_user($user_id);
 						
-						if(!$activate && $user_data['email_address'] !== $user->email_address){
-							//$this->_reactivation_request_notification($user_id);
-						}
-						elseif($activate){
-							//$this->_activation_request_notification($user_id);
+						if($new_user || $user_data['email_address'] !== $user->email_address)
+						{
+							
+							
+							if($new_user)
+							{
+								$this->user->save_user_activation($user->id);
+							}
+							
+							if(!$this->_activation_request_notification($user->id,$new_user))
+							{
+								$this->alert->set('error','A email was not sent to this user.');
+							}
 						}
 					} else{
 						$success = false;
@@ -127,8 +138,10 @@
 				if($success)
 				{
 					$this->alert->set('success','User details were saved.');
-					redirect('users/');
 				}
+				
+				redirect('users/');
+
 			}
 
 			$data = array();
@@ -493,7 +506,6 @@
 			return $return;
 		}
 
-
 		public function _check_passphrase_match()
 		{
 			$return = false;
@@ -514,6 +526,73 @@
 			{
 				$this->form_validation->set_message('_check_passphrase_match', 'Error occured while comparing passphrases.  Aborting.');
 			}
+			return $return;
+		}
+
+		public function _activation_request_notification($user_id = null, $new = false)
+		{
+			//	Load our config and notify library
+			$this->config->load('notifications', TRUE);
+			$this->load->library('notify');
+			
+			$email_template_directory = $this->config->item('email_template_view_directory', 'notifications');
+			
+			$return = false;
+			if(is_numeric($user_id))
+			{
+				$data = array();
+				//	Get our data for the base reservation
+				$user = $this->user->fetch_user_activation($user_id);
+				if($user)
+				{
+				
+						$notify_recipient = '"' . $user->handle . '" <' . $user->email_address . '>';
+
+						$data['user'] = array(
+								'id' => $user->id,
+								'handle' => $user->handle,
+								'email_address' => $user->email_address,
+								'activation' => array(
+									'code' => $user->activation->code,
+								),
+						);
+
+						$data['activation_link'] = site_url('login/activate') . '/' . $user->activation->code;
+
+						if(!is_null($notify_recipient) && is_array($data))
+						{
+
+							if($new)
+							{
+								$subject = "Your new VarYX user account";
+								$html_body = $this->load->view($email_template_directory . 'user/activation_request_html', $data, true);
+								$plaintext_body = $this->load->view($email_template_directory . 'user/activation_request_text', $data, true);
+							}
+							else
+							{
+								$subject = "Your VarYX user account";
+								$html_body = $this->load->view($email_template_directory . 'user/reactivation_request_html', $data, true);
+								$plaintext_body = $this->load->view($email_template_directory . 'user/reactivation_request_text', $data, true);
+							}
+
+							$return = $this->notify->send(
+									$notify_recipient,
+									$subject,
+									$html_body,
+									$plaintext_body
+							);
+						}
+				}
+				else
+				{
+					$this->alert->set('error', 'The user was not found. (uid: ' . $user_id . ')');
+				}
+			}
+			else
+			{
+				$this->alert->set('error', 'The user id was invalid. (uid: ' . $user_id . ')');
+			}
+
 			return $return;
 		}
 	}

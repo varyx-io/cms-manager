@@ -44,7 +44,7 @@
 					<!-- Todo : Fix this nonsense -->
 					<div class="navbar-brand">
 						<a href="#" class="logo">
-							<img src="<?php echo base_url('img/varyx-logo.png'); ?>" alt="logo">
+							<img src="<?php echo base_url('ux/assets/images/logos/varyx-logo.png'); ?>" alt="logo">
 							<span class="menu-toggle hidden-xs">
 								CMP
 							</span>

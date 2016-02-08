@@ -6,7 +6,6 @@
 		private $_auth_redirect;
 		
 		private $_unsecure = array(
-				'Users/Sessions/login',
 				'login',
 		);
 		
@@ -27,7 +26,8 @@
 			//First, are we logged in?
 			$this->_logged_in = $this->session->has_userdata('user_id') ? true : false;
 			
-			if(!$this->_logged_in && !in_array($this->uri->uri_string(), $this->_unsecure))
+			$module_segment = $this->uri->segment(1);
+			if(!$this->_logged_in && !in_array($module_segment, $this->_unsecure))
 			{
 				$this->session->redirect = $this->uri->uri_string();
 				redirect('login');
