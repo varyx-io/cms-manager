@@ -81,66 +81,83 @@ class Sessions extends VARYX_Controller {
 		}
 	}
 	
+	public function recover()
+	{
+		if($this->input->post('login-recover'))
+		{
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('user[email_address]', 'Email Address', 'trim');
+			$this->form_validation->set_rules('user[handle]', 'User Handle', 'trim');
+			if($this->form_validation->run() == true)
+			{
+				$form_data = $this->input->post();
+				
+				$user_ident = (!empty($form_data['user']['email_address'])) ? $form_data['user']['email_address'] : $form_data['user']['handle'];
+				$user = $this->user->fetch_user($user_ident);
+				
+				if($user)
+				{
+					$this->user->save_user_reset($user->id);
+					if($this->_reset_request_notification($user->id))
+					{
+						$this->alert->set('error','An email has been sent with instructions on how to reset this account.');
+						redirect('login');
+					}
+				}
+			}
+			else
+			{
+				$this->alert->set('error','Form Didn\'t validate');
+				redirect('login/recover');
+			}
+		}
+		
+		$this->template
+						->build('content/users/sessions/recover');
+	}
+	
 	public function reset($code = null)
 	{
 		if(!is_null($code))
 		{
-			$user_reset = $this->user->fetch_user_reset($code);
-			if(!is_null($user_reset))
+			$user = $this->user->fetch_user_reset($code);
+			if(!is_null($user))
 			{
-				$user = $this->user->fetch_user($user_reset->user_id);
-				if(!is_null($user))
+			  $user_id = $user->id;
+			  if($this->input->post('passphrase-save'))
 				{
-					$user_id = $user->id;
-					if($this->input->post('passphrase-save'))
+					$this->load->library('form_validation');
+					$this->form_validation->set_rules('user_passphrase[passphrase]', 'New Password', 'trim|required');
+					$this->form_validation->set_rules('user_passphrase[confirm]', 'Confirm New Password', 'trim|required|callback__check_passphrase_match');
+					if($this->form_validation->run() == true)
 					{
-						//	First let's validate the form
-						$this->load->library('form_validation');
-						
-						$this->form_validation->set_rules('user_passphrase[passphrase]', 'New Password', 'trim|required');
-						$this->form_validation->set_rules('user_passphrase[confirm]', 'Confirm New Password', 'trim|required|callback__check_passphrase_match');
-
 						$form_data = $this->input->post();
-						$password = $form_data['user_passphrase']['passphrase'];
-						if( strlen($password) < 10){
-							redirect('/login/reset/' . $code);
-						}
-
-						if($this->form_validation->run() == true)
+						$user_passphrase = $form_data['user_passphrase'];
+						$user_passphrase_result = $this->user->save_user_passphrase($user_id,$user_passphrase['passphrase']);
+						if(is_numeric($user_passphrase_result))
 						{
+							$this->user->save_user(array('status' => 'active'),$user_id);
+							$this->user->delete_user_reset($user_id);
 
-							$user_passphrase = $form_data['user_passphrase'];
-							$user_passphrase_result = $this->user->save_user_passphrase($user_id,$user_passphrase['passphrase']);
-							if(is_numeric($user_passphrase_result))
-							{
-								$this->user->delete_user_reset($code);
-
-								//	Log user password change.
-
-								redirect('login');
-							}
-						}
-						else
-						{
-							
+							$this->alert->set('success','Your account was successfully reset!');
+							redirect('login');
 						}
 					}
-					else
-					{
-						$this->template->set('confmsg',false);
-						$this->template->set('showform',true);
-					}
-					$this->template
-									->build('content/users/sessions/reset');
-				}
-				else
-				{
-					$this->alert->set('error','Invalid reset code.');
-					redirect('login');
-				}				
+			  }
+			  else
+			  {
+					$this->template->set('confmsg',false);
+					$this->template->set('showform',true);
+			  }
+			  $this->template
+								->set('code',$code)
+					  ->build('content/users/sessions/reset');
 			}
-
-			echo $code;
+		}
+		else
+		{
+			$this->alert->set('error','Invalid reset code.');
+			redirect('login');
 		}
 	}
 	
@@ -275,7 +292,6 @@ class Sessions extends VARYX_Controller {
 			return $return;
 		}
 
-
 		public function _check_passphrase_match()
 		{
 			$return = false;
@@ -298,5 +314,62 @@ class Sessions extends VARYX_Controller {
 			}
 			return $return;
 		}
-	
+		
+		public function _reset_request_notification($user_id = null)
+		{
+			//	Load our config and notify library
+			$this->config->load('notifications', TRUE);
+			$this->load->library('notify');
+			
+			$email_template_directory = $this->config->item('email_template_view_directory', 'notifications');
+			
+			$return = false;
+			if(is_numeric($user_id))
+			{
+				$data = array();
+				//	Get our data for the base reservation
+				$user = $this->user->fetch_user_reset($user_id);
+				if($user)
+				{
+				
+						$notify_recipient = '"' . $user->handle . '" <' . $user->email_address . '>';
+
+						$data['user'] = array(
+								'id' => $user->id,
+								'handle' => $user->handle,
+								'email_address' => $user->email_address,
+								'reset' => array(
+									'code' => $user->reset->code,
+								),
+						);
+
+						$data['reset_link'] = site_url('login/reset') . '/' . $user->reset->code;
+
+						if(!is_null($notify_recipient) && is_array($data))
+						{
+
+							$subject = "Your VarYX user account";
+							$html_body = $this->load->view($email_template_directory . 'user/reset_request_html', $data, true);
+							$plaintext_body = $this->load->view($email_template_directory . 'user/reset_request_text', $data, true);
+
+							$return = $this->notify->send(
+									$notify_recipient,
+									$subject,
+									$html_body,
+									$plaintext_body
+							);
+						}
+				}
+				else
+				{
+					$this->alert->set('error', 'The user was not found. (uid: ' . $user_id . ')');
+				}
+			}
+			else
+			{
+				$this->alert->set('error', 'The user id was invalid. (uid: ' . $user_id . ')');
+			}
+
+			return $return;
+		}
 }

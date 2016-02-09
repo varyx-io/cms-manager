@@ -1,35 +1,75 @@
-<!-- Container Fluid starts -->
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-push-4 col-md-4 col-sm-push-3 col-sm-6 col-sx-12">
-<?php echo validation_errors(); ?>
-			<!-- Header end -->
-			<div class="login-container">
-				<div class="login-wrapper animated flipInY">
-					<div id="forgot-pwd" class="form-action">
-						<div class="login-header">
-							<h4>Reset your Password</h4>
-						</div>
-						<?php echo form_open('', array('id' => 'reset_password_form', 'class' => 'form-signin')); ?>
-						<input type="hidden" name="passphrase-save" value="true" />
-							<div class="form-group has-feedback">
-								<label class="control-label" for="password3">Password</label>
-								<input type="password" class="form-control" id="password3" name="user_passphrase[passphrase]">
-								<i class="fa fa-key form-control-feedback"></i>
-							</div>
-							<div class="form-group has-feedback">
-								<label class="control-label" for="password4">Confirm password</label>
-								<input type="password" name="user_passphrase[confirm]" class="form-control" id="password4">
-								<i class="fa fa-key form-control-feedback"></i>
-							</div>
-							<input type="submit" value="Reset" class="btn btn-danger btn-lg btn-block">
-						<?php echo form_close(); ?>
-						<a href="#register">Don't have an account? <span class="text-danger">Sign Up</span></a>
-					</div>
+<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 hidden-xs hidden-sm">
+						<h1 class="txt-color-red login-header-big">SmartAdmin</h1>
+						<div class="hero">
 
+							<div class="pull-left login-desc-box-l">
+								<h4 class="paragraph-header">It's Okay to be Smart. Experience the simplicity of VarYX, everywhere you go!</h4>
+								<div class="login-app-icons">
+									<a href="javascript:void(0);" class="btn btn-danger btn-sm">Frontend Template</a>
+									<a href="javascript:void(0);" class="btn btn-danger btn-sm">Find out more</a>
+								</div>
+							</div>
+							
+							<img src="<?php echo base_url('img/demo/iphoneview.png'); ?>" alt="" class="pull-right display-image" style="width:210px">
+							
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<h5 class="about-heading">About VarYX \ io - Are you up to date?</h5>
+								<p>
+									Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.
+								</p>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<h5 class="about-heading">Not just your average template!</h5>
+								<p>
+									Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi voluptatem accusantium!
+								</p>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+						<div class="well no-padding">
+
+							<form action="<?php echo site_url('login/reset'); ?>/<?php echo $code; ?>" id="smart-form-register" class="smart-form client-form" method="POST">
+								<input type="hidden" name="passphrase-save" value="true" />
+								<header>
+									Reset your password
+								</header>
+
+								<fieldset>
+									
+									<section>
+										<label class="input"> <i class="icon-append fa fa-lock"></i>
+											<input type="password" name="user_passphrase[passphrase]" placeholder="Password" id="password">
+											<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+									</section>
+
+									<section>
+										<label class="input"> <i class="icon-append fa fa-lock"></i>
+											<input type="password" name="user_passphrase[confirm]" placeholder="Confirm password">
+											<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+									</section>
+								</fieldset>
+								<footer>
+									<button type="submit" class="btn btn-primary">
+										Reset
+									</button>
+								</footer>
+
+								<div class="message">
+									<i class="fa fa-check"></i>
+									<p>
+										Thank you for your registration!
+									</p>
+								</div>
+							</form>
+
+						</div>
+						<p class="note text-center">*Note.</p>
+						
+					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Container Fluid ends -->

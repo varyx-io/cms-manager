@@ -1,24 +1,38 @@
 module.exports = function (grunt) {
+
+	var globalConfig = {
+		src: 'source', 
+		dest: '.'
+	};
+	
 	grunt.initConfig({
-//		clean: {
-//			//build: ["css/","js/"]
-//		},
+		
+    globalConfig: globalConfig,
+    pkg: grunt.file.readJSON('package.json'),
+    banner: '/*!\n' +
+            ' * VarYX-IO Content Publishing CMP v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+            ' * Copyright 2015-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+            ' */\n',
+    jqueryCheck: 'if (typeof jQuery === \'undefined\') { throw new Error(\'Bootstrap\\\'s JavaScript requires jQuery\') }\n\n',
+		
+		clean: {
+			build: ["<%= globalConfig.dest %>/css/","<%= globalConfig.dest %>/js/"]
+		},
 		less: {
 			build: {
 				files: [
 					{
 						//	First we build out bootstrap
-						"css/app.min.css": [
-							"source/less/app.less"
+						"<%= globalConfig.dest %>/css/app.min.css": [
+							"<%= globalConfig.src %>/less/bootstrap.less",
+							"<%= globalConfig.src %>/less/library/fontawesome/font-awesome.less",
+
+							"<%= globalConfig.src %>/less/smartadmin-production-plugins.less",
+							"<%= globalConfig.src %>/less/smartadmin-production.less",
+							"<%= globalConfig.src %>/less/smartadmin-skins.less"
+							
 						]
-					},
-					{
-						expand: true,
-						cwd: 'source/less/modules',
-						src: ['*.less'],
-						dest: 'css/modules/',
-						ext: '.min.css'
-					},
+					}
 				]
 			}
 		},
@@ -30,26 +44,18 @@ module.exports = function (grunt) {
 				sourceMapName: 'js/global.map'
 			},
 			build: {
-				files: [
-					{
-						'js/app.min.js': [
-
-							//	This will be our root JS (donoted by '_').  We include this AFTER all other vendor scripts.  These are for GLOBAL scripts and directives.
-							//	main JS will contain mostly event listeners and implimentations and yes, one-offs will go here because we can, through the magic of selectors,
-							//	target specific entities and still do it effieintly
-							'source/js/app.js'
-						]
-					},
-
-					//	Compile all plugin files.
-					{
-						expand: true,
-						cwd: 'source/js/modules',
-						src: ['**/*.js'],
-						dest: 'js/modules/',
-						ext: '.min.js'
-					}
-				]
+				// Grunt will search for "**/*.js" under "lib/" when the "uglify" task
+        // runs and build the appropriate src-dest file mappings then, so you
+        // don't need to update the Gruntfile when files are added or removed.
+        files: [{
+            expand: true,
+            src: ['**/*.js', '!**/*.min.js', '!**/*.backup.js'],
+            dest: '<%= globalConfig.dest %>/js/',
+            cwd: '<%= globalConfig.src %>/js/',
+            extDot: 'last',
+            ext: '.min.js'
+            
+        }]
 			}
 		},
 

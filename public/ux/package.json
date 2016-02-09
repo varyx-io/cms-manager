@@ -1,7 +1,7 @@
 {
   "name": "varyx-cmp-manager",
   "version": "0.0.1",
-  "description": "VarYX CMP Manager Design",
+  "description": "VarYX CMP Manager",
   "author": "W Andrew",
   "license": "FUL",
   "devDependencies": {

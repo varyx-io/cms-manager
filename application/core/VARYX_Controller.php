@@ -17,6 +17,7 @@
 			
 			//	Set template build defaults
 			$this->template
+							->set('page_title','')
 							->set_partial('ga', 'layouts/_global/ga')
 							->set_layout('default');
 			

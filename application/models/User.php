@@ -203,33 +203,56 @@
 			return $return;
 		}
 		
-		public function fetch_user_reset($code = null)
+		public function fetch_user_reset($ident = null)
 		{
 			$return = null;
-			if(!is_null($code))
+
+			if(!is_null($ident))
 			{
-				$query = $this->db
-								->select('`user_reset`.`id` AS `user_reset_id`')
-								->select('`user_reset`.`user_id` AS `user_reset_user_id`')
-								->select('`user_reset`.`created` AS `user_reset_created`')
-								
-								->where('code', $code)
-								
-								->from('user_reset')
-								->get();
 				
+				
+				if(is_numeric($ident))
+				{
+					$sql_where_clause = ' WHERE `user`.`id` = ' . $ident;
+				}
+				else
+				{
+					$sql_where_clause = ' WHERE `user_reset`.`code` = \'' . $ident . '\'';
+				}
+				
+				$sql = ''
+								. 'SELECT'
+								. ' `user`.`id` AS `user_id`'
+								. ', `user`.`handle` AS `user_handle`'
+								. ', `user`.`email_address` AS `user_email_address`'
+
+								. ', `user_reset`.`code` AS `user_reset_code`'
+
+								. ' FROM `user_reset`'
+
+								. ' INNER JOIN `user` ON `user_reset`.`user_id` = `user`.`id`'
+								. $sql_where_clause
+								. ' LIMIT 1';
+				
+				$query = $this->db->query($sql);
 				if($query->num_rows() == 1)
 				{
 					$row = $query->row();
 
 					$user_reset = new stdClass();
-					$user_reset->id = $row->user_reset_id;
-					$user_reset->user_id = $row->user_reset_user_id;
-					$user_reset->created = $row->user_reset_created;
+					$user_reset->code = $row->user_reset_code;
 
-					$return = $user_reset;
-				}
+					$user = new stdClass();
+					$user->id = $row->user_id;
+					$user->handle = $row->user_handle;
+					$user->email_address = $row->user_email_address;
+
+					$user->reset = $user_reset;
+
+					$return = $user;
+				}				
 			}
+				
 			return $return;
 		}
 		
@@ -321,6 +344,33 @@
 				);
 				
 				if($this->db->insert('`user_activation`', $data)){
+					$return = true;
+				}
+			}
+
+			return $return;
+		}
+		
+				public function save_user_reset($user_id = null)
+		{
+			$return = false;
+
+			if(is_numeric($user_id))
+			{
+				//	First, we want to delete the existing activation for this user.
+				$query = $this->db->get_where('`user_reset`', array('`user_id`',$user_id));
+				if($query->num_rows() > 0)
+				{
+					$this->db->delete('`user_reset`', array('`user_id`',$user_id));
+				}
+				
+				$data = array(
+						'user_id' => $user_id,
+						'code' => md5(uniqid(null,true)),
+						'created' => date('Y-m-d H:i:s', time())
+				);
+				
+				if($this->db->insert('`user_reset`', $data)){
 					$return = true;
 				}
 			}
