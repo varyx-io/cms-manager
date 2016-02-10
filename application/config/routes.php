@@ -56,11 +56,15 @@ $route['translate_uri_dashes'] = FALSE;
 //	Here we are going to set our user paths
 $route['login'] = 'Users/Sessions/login';
 $route['logout'] = 'Users/Sessions/logout';
+
 $route['login/recover'] = 'Users/Sessions/recover';
+
 $route['login/reset/(:any)'] = 'Users/Sessions/reset/$1';
 $route['login/reset'] = 'Users/Sessions/reset';
+
 $route['login/activate/(:any)'] = 'Users/Sessions/activate/$1';
 $route['login/activate'] = 'Users/Sessions/activate';
+
 $route['login/expired'] = 'Users/Sessions/expired';
 
 $route['users(/)?'] = 'Users/Manage/dashboard';
